@@ -2,116 +2,128 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Estimador de Tiempos - Adaptación de eLearning</title>
-    <!-- Carga de Tailwind CSS vía CDN -->
+    <title>Estimador con Story Points - Adaptación de eLearning</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 p-8">
-<div class="bg-white p-6 rounded-2xl shadow-2xl max-w-3xl mx-auto">
-    <h2 class="text-2xl font-bold mb-6">Estimación Detallada de Tiempo</h2>
+<div class="bg-white p-6 rounded-2xl shadow-lg max-w-4xl mx-auto">
+    <h2 class="text-2xl font-bold mb-6">Estimación Detallada con Story Points</h2>
     <div class="space-y-4">
         <div>
             <label class="block font-medium mb-1">Número de Learning Paths:</label>
             <input id="numPaths" type="number" min="1" value="1" class="p-2 border rounded w-full" onchange="renderPaths()">
         </div>
-        <form id="estimacionForm" class="space-y-6"></form>
-        <button onclick="calcular()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded w-full font-bold">Calcular Tiempo Total</button>
+        <form id="form-container" class="space-y-6"></form>
+        <button onclick="calcular()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded w-full font-bold">
+            Calcular Estimación
+        </button>
         <div id="resultado" class="mt-6 text-lg font-semibold text-blue-800"></div>
     </div>
 </div>
 <script>
+// Configuración de Story Points (ajustar según tu criterio)
+const storyPointsContent = {
+    scorm: 3,
+    h5p: 3,
+    ppt: 2,
+    video: 2,
+    pdf: 1,
+    texto: 1,
+    otro: 1
+};
+const storyPointsAdaptation = {
+    carga: 0,
+    conversion: 1,
+    edicion: 2,
+    navegacion: 1,
+    correccion: 1,
+    multilingue: 3
+};
+// Factor de conversión de puntos a días hábiles (puntos por día)
+const pointsPerDay = 4; // e.g., 4 story points = 1 día hábil
+
+// Renderiza dinámica de estructura
 function renderPaths() {
-    const container = document.getElementById('estimacionForm');
+    const container = document.getElementById('form-container');
     container.innerHTML = '';
-    const numPaths = parseInt(document.getElementById('numPaths').value) || 1;
-    for (let p = 1; p <= numPaths; p++) {
-        const pathDiv = document.createElement('div');
-        pathDiv.className = 'p-4 border rounded space-y-3';
-        pathDiv.innerHTML = `
-            <h3 class="font-semibold">Learning Path ${p}</h3>
-            <div>
-                <label class="block mb-1">Módulos:</label>
-                <input type="number" min="1" value="1" class="p-1 border rounded w-full modules-count" onchange="renderModules(this, ${p-1})">
-            </div>
-            <div class="modules-container space-y-4" data-path-index="${p-1}"></div>
+    const paths = parseInt(document.getElementById('numPaths').value) || 1;
+    for (let i = 1; i <= paths; i++) {
+        const div = document.createElement('div');
+        div.className = 'p-4 border rounded';
+        div.innerHTML = `
+            <h3 class="font-semibold mb-2">Learning Path ${i}</h3>
+            <label class="block mb-1">Módulos:</label>
+            <input type="number" min="1" value="1" class="p-1 border rounded w-full modules-count" onchange="renderModules(this)">
+            <div class="modules-container mt-3 space-y-4"></div>
         `;
-        container.appendChild(pathDiv);
-        renderModules(pathDiv.querySelector('.modules-count'), p-1);
+        container.appendChild(div);
+        renderModules(div.querySelector('.modules-count'));
     }
 }
 
-function renderModules(input, pathIndex) {
-    const modulesContainer = input.closest('div').nextElementSibling;
-    modulesContainer.innerHTML = '';
-    const numMod = parseInt(input.value) || 1;
-    for (let m = 1; m <= numMod; m++) {
-        const moduleDiv = document.createElement('div');
-        moduleDiv.className = 'p-3 border rounded bg-gray-50';
-        moduleDiv.innerHTML = `
-            <h4 class="font-medium">Módulo ${m}</h4>
-            <div>
-                <label class="block mb-1">Actividades:</label>
-                <input type="number" min="1" value="1" class="p-1 border rounded w-full activities-count" onchange="renderActivities(this, ${pathIndex}, ${m-1})">
-            </div>
-            <div class="activities-container space-y-2" data-module-index="${m-1}" data-path-index="${pathIndex}"></div>
+function renderModules(input) {
+    const modContainer = input.closest('div').querySelector('.modules-container');
+    modContainer.innerHTML = '';
+    const count = parseInt(input.value) || 1;
+    for (let m = 1; m <= count; m++) {
+        const md = document.createElement('div');
+        md.className = 'p-3 border rounded bg-gray-50';
+        md.innerHTML = `
+            <h4 class="font-medium mb-1">Módulo ${m}</h4>
+            <label class="block mb-1">Actividades:</label>
+            <input type="number" min="1" value="1" class="p-1 border rounded w-full activities-count" onchange="renderActivities(this)">
+            <div class="activities-container mt-2 space-y-2"></div>
         `;
-        modulesContainer.appendChild(moduleDiv);
-        renderActivities(moduleDiv.querySelector('.activities-count'), pathIndex, m-1);
+        modContainer.appendChild(md);
+        renderActivities(md.querySelector('.activities-count'));
     }
 }
 
-function renderActivities(input, pathIndex, moduleIndex) {
-    const activitiesContainer = input.closest('div').nextElementSibling;
-    activitiesContainer.innerHTML = '';
-    const numAct = parseInt(input.value) || 1;
-    for (let a = 1; a <= numAct; a++) {
-        const actDiv = document.createElement('div');
-        actDiv.className = 'p-2 border rounded bg-white';
-        actDiv.innerHTML = `
-            <h5>Actividad ${a}</h5>
-            <div class="grid grid-cols-1 gap-2">
-                <select class="p-1 border rounded content-type">
-                    <option value="scorm">SCORM</option>
-                    <option value="h5p">H5P</option>
-                    <option value="ppt">PowerPoint</option>
-                    <option value="video">Video</option>
-                    <option value="pdf">PDF</option>
-                    <option value="texto">Texto</option>
-                    <option value="otro">Otro</option>
-                </select>
-                <div class="grid grid-cols-2 gap-1 adaptations">
-                    <label><input type="checkbox" class="mr-1 adaptation" value="conversion">Conversión</label>
-                    <label><input type="checkbox" class="mr-1 adaptation" value="edicion">Edición multimedia</label>
-                    <label><input type="checkbox" class="mr-1 adaptation" value="navegacion">Navegación</label>
-                    <label><input type="checkbox" class="mr-1 adaptation" value="correccion">Corrección</label>
-                    <label><input type="checkbox" class="mr-1 adaptation" value="accesibilidad">Accesibilidad</label>
-                    <label><input type="checkbox" class="mr-1 adaptation" value="multilingue">Multilingüe</label>
-                    <label><input type="checkbox" class="mr-1 adaptation" value="integracion">Integración</label>
-                </div>
+function renderActivities(input) {
+    const actContainer = input.closest('div').querySelector('.activities-container');
+    actContainer.innerHTML = '';
+    const count = parseInt(input.value) || 1;
+    Object.keys(storyPointsAdaptation); // ensure load
+    for (let a = 1; a <= count; a++) {
+        const ad = document.createElement('div');
+        ad.className = 'p-2 border rounded bg-white';
+        ad.innerHTML = `
+            <div class="flex justify-between items-center mb-1">
+              <h5 class="font-medium">Actividad ${a}</h5>
+              <select class="p-1 border rounded content-type">
+                ${Object.keys(storyPointsContent).map(k => `<option value="${k}">${k.toUpperCase()}</option>`).join('')}
+              </select>
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              ${Object.keys(storyPointsAdaptation).map(k => `
+                <label class="flex items-center">
+                  <input type="checkbox" class="mr-1 adaptation" value="${k}">
+                  ${k.charAt(0).toUpperCase() + k.slice(1)}
+                </label>
+              `).join('')}
             </div>
         `;
-        activitiesContainer.appendChild(actDiv);
+        actContainer.appendChild(ad);
     }
 }
 
 function calcular() {
-    const resultEl = document.getElementById('resultado');
-    let tiempoTotal = 0;
-    document.querySelectorAll('[data-path-index]').forEach(pathDiv => {
-        pathDiv.querySelectorAll('.modules-container > div').forEach(modDiv => {
-            modDiv.querySelectorAll('.activities-container > div').forEach(actDiv => {
-                const tipo = actDiv.querySelector('.content-type').value;
-                const adaptChecks = Array.from(actDiv.querySelectorAll('.adaptation')).filter(c => c.checked).map(c => c.value);
-                let tier = 1;
-                if (adaptChecks.includes('accesibilidad') || adaptChecks.includes('integracion') || adaptChecks.includes('multilingue') || adaptChecks.length >= 3) tier = 3;
-                else if (adaptChecks.length >= 1) tier = 2;
-                const base = {scorm:1, h5p:1, ppt:0.5, video:0.5, pdf:0.3, texto:0.2, otro:0.5}[tipo] || 0.5;
-                const factorTier = [1,2,3][tier-1];
-                tiempoTotal += base * factorTier;
+    let totalPoints = 0;
+    document.querySelectorAll('.activities-container').forEach(c => {
+        c.querySelectorAll('div').forEach(act => {
+            const type = act.querySelector('.content-type').value;
+            const adapt = Array.from(act.querySelectorAll('.adaptation')).filter(x => x.checked).map(x => x.value);
+            let pts = storyPointsContent[type] || 1;
+            adapt.forEach(a => {
+                pts += storyPointsAdaptation[a] || 0;
             });
+            totalPoints += pts;
         });
     });
-    resultEl.innerHTML = `Tiempo estimado total: <b>${tiempoTotal.toFixed(1)}</b> días hábiles.`;
+    const days = (totalPoints / pointsPerDay).toFixed(1);
+    document.getElementById('resultado').innerHTML =
+      `Total Story Points: <b>${totalPoints}</b><br>` +
+      `Estimación: <b>${days}</b> días hábiles (1 día = ${pointsPerDay} points)`;
 }
 
 document.addEventListener('DOMContentLoaded', renderPaths);
