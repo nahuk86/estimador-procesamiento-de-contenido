@@ -6,127 +6,167 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 p-8">
-<div class="bg-white p-6 rounded-2xl shadow-lg max-w-4xl mx-auto">
+  <!-- Modal de información inicial -->
+  <div id="info-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg p-6 max-w-md mx-auto relative">
+      <button onclick="closeModal()" class="absolute top-2 right-2 text-gray-600 hover:text-gray-800">✖️</button>
+      <h3 class="text-xl font-bold mb-4">Bienvenido al Estimador de Story Points</h3>
+      <p class="mb-2">Esta herramienta calcula el tiempo estimado de procesamiento según Story Points:</p>
+      <ul class="list-disc list-inside mb-2 text-sm">
+        <li><b>Learning Path:</b> 2 SP cada uno</li>
+        <li><b>Módulo:</b> 1 SP cada uno</li>
+        <li><b>Tipos de contenido:</b>
+          <ul class="list-disc list-inside ml-4">
+            <li>SCORM / H5P: 3 SP</li>
+            <li>PowerPoint / Video: 2 SP</li>
+            <li>PDF / Texto / Otro: 1 SP</li>
+          </ul>
+        </li>
+        <li><b>Adaptaciones:</b>
+          <ul class="list-disc list-inside ml-4">
+            <li>Carga sin modificación: 0 SP</li>
+            <li>Conversión de formato: 1 SP</li>
+            <li>Edición multimedia: 2 SP</li>
+            <li>Navegación: 1 SP</li>
+            <li>Corrección: 1 SP</li>
+            <li>Multilingüe: 3 SP</li>
+          </ul>
+        </li>
+      </ul>
+      <p class="text-sm">Velocidad de procesamiento: <b>4</b> SP por día hábil.</p>
+    </div>
+  </div>
+
+  <div class="bg-white p-6 rounded-2xl shadow-lg max-w-4xl mx-auto">
     <h2 class="text-2xl font-bold mb-6">Estimación Detallada con Story Points</h2>
     <div class="space-y-4">
-        <div>
-            <label class="block font-medium mb-1">Número de Learning Paths:</label>
-            <input id="numPaths" type="number" min="1" value="1" class="p-2 border rounded w-full" onchange="renderPaths()">
-        </div>
-        <form id="form-container" class="space-y-6"></form>
-        <button onclick="calcular()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded w-full font-bold">
-            Calcular Estimación
-        </button>
-        <div id="resultado" class="mt-6 text-lg font-semibold text-blue-800"></div>
+      <div>
+        <label class="block font-medium mb-1">Número de Learning Paths:</label>
+        <input id="numPaths" type="number" min="1" value="1" class="p-2 border rounded w-full" onchange="renderPaths()">
+      </div>
+      <form id="form-container" class="space-y-6"></form>
+      <button onclick="calcular()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded w-full font-bold">
+        Calcular Estimación
+      </button>
+      <div id="resultado" class="mt-6 text-lg font-semibold text-blue-800"></div>
     </div>
-</div>
-<script>
-// Configuración de Story Points (ajustar según tu criterio)
-const storyPointsContent = {
-    scorm: 3,
-    h5p: 3,
-    ppt: 2,
-    video: 2,
-    pdf: 1,
-    texto: 1,
-    otro: 1
-};
-const storyPointsAdaptation = {
-    carga: 0,
-    conversion: 1,
-    edicion: 2,
-    navegacion: 1,
-    correccion: 1,
-    multilingue: 3
-};
-// Factor de conversión de puntos a días hábiles (puntos por día)
-const pointsPerDay = 4; // e.g., 4 story points = 1 día hábil
+  </div>
 
-// Renderiza dinámica de estructura
-function renderPaths() {
-    const container = document.getElementById('form-container');
-    container.innerHTML = '';
-    const paths = parseInt(document.getElementById('numPaths').value) || 1;
-    for (let i = 1; i <= paths; i++) {
+  <script>
+    // Configuración de Story Points
+    const storyPointsContent = { scorm: 3, h5p: 3, ppt: 2, video: 2, pdf: 1, texto: 1, otro: 1 };
+    const storyPointsAdaptation = { carga: 0, conversion: 1, edicion: 2, navegacion: 1, correccion: 1, multilingue: 3 };
+    const setupPointsPath = 2;
+    const setupPointsModule = 1;
+    const pointsPerDay = 4;
+
+    // Descripciones para adaptaciones (tooltips CSS)
+    const adaptationInfo = {
+      carga: 'Carga sin modificación: subir contenido sin ajustes.',
+      conversion: 'Conversión de formato: e.g., PPT a H5P.',
+      edicion: 'Edición multimedia: retoque de imágenes, audio o video.',
+      navegacion: 'Ajustes de navegación o interactividad.',
+      correccion: 'Corrección de textos, enlaces e imágenes.',
+      multilingue: 'Adaptación y traducción a múltiples idiomas.'
+    };
+
+    function closeModal() {
+      document.getElementById('info-modal').classList.add('hidden');
+    }
+
+    function renderPaths() {
+      const container = document.getElementById('form-container');
+      container.innerHTML = '';
+      const paths = parseInt(document.getElementById('numPaths').value) || 1;
+      for (let i = 1; i <= paths; i++) {
         const div = document.createElement('div');
         div.className = 'p-4 border rounded';
         div.innerHTML = `
-            <h3 class="font-semibold mb-2">Learning Path ${i}</h3>
-            <label class="block mb-1">Módulos:</label>
-            <input type="number" min="1" value="1" class="p-1 border rounded w-full modules-count" onchange="renderModules(this)">
-            <div class="modules-container mt-3 space-y-4"></div>
+          <h3 class="font-semibold mb-2">Learning Path ${i}</h3>
+          <label class="block mb-1">Módulos:</label>
+          <input type="number" min="1" value="1" class="p-1 border rounded w-full modules-count" onchange="renderModules(this)">
+          <div class="modules-container mt-3 space-y-4"></div>
         `;
         container.appendChild(div);
         renderModules(div.querySelector('.modules-count'));
+      }
     }
-}
 
-function renderModules(input) {
-    const modContainer = input.closest('div').querySelector('.modules-container');
-    modContainer.innerHTML = '';
-    const count = parseInt(input.value) || 1;
-    for (let m = 1; m <= count; m++) {
+    function renderModules(input) {
+      const modContainer = input.closest('div').querySelector('.modules-container');
+      modContainer.innerHTML = '';
+      const count = parseInt(input.value) || 1;
+      for (let m = 1; m <= count; m++) {
         const md = document.createElement('div');
         md.className = 'p-3 border rounded bg-gray-50';
         md.innerHTML = `
-            <h4 class="font-medium mb-1">Módulo ${m}</h4>
-            <label class="block mb-1">Actividades:</label>
-            <input type="number" min="1" value="1" class="p-1 border rounded w-full activities-count" onchange="renderActivities(this)">
-            <div class="activities-container mt-2 space-y-2"></div>
+          <h4 class="font-medium mb-1">Módulo ${m}</h4>
+          <label class="block mb-1">Actividades:</label>
+          <input type="number" min="1" value="1" class="p-1 border rounded w-full activities-count" onchange="renderActivities(this)">
+          <div class="activities-container mt-2 space-y-2"></div>
         `;
         modContainer.appendChild(md);
         renderActivities(md.querySelector('.activities-count'));
+      }
     }
-}
 
-function renderActivities(input) {
-    const actContainer = input.closest('div').querySelector('.activities-container');
-    actContainer.innerHTML = '';
-    const count = parseInt(input.value) || 1;
-    Object.keys(storyPointsAdaptation); // ensure load
-    for (let a = 1; a <= count; a++) {
+    function renderActivities(input) {
+      const actContainer = input.closest('div').querySelector('.activities-container');
+      actContainer.innerHTML = '';
+      const count = parseInt(input.value) || 1;
+      for (let a = 1; a <= count; a++) {
         const ad = document.createElement('div');
-        ad.className = 'p-2 border rounded bg-white';
+        ad.className = 'activity-item p-2 border rounded bg-white';
         ad.innerHTML = `
-            <div class="flex justify-between items-center mb-1">
-              <h5 class="font-medium">Actividad ${a}</h5>
-              <select class="p-1 border rounded content-type">
-                ${Object.keys(storyPointsContent).map(k => `<option value="${k}">${k.toUpperCase()}</option>`).join('')}
-              </select>
-            </div>
-            <div class="grid grid-cols-2 gap-2">
-              ${Object.keys(storyPointsAdaptation).map(k => `
+          <h5 class="font-medium mb-1">Actividad ${a}</h5>
+          <select class="p-1 border rounded content-type mb-2">
+            ${Object.keys(storyPointsContent).map(k => `<option value="${k}">${k.toUpperCase()}</option>`).join('')}
+          </select>
+          <div class="grid grid-cols-2 gap-2">
+            ${Object.keys(storyPointsAdaptation).map(k => `
+              <div class="relative group">
                 <label class="flex items-center">
                   <input type="checkbox" class="mr-1 adaptation" value="${k}">
                   ${k.charAt(0).toUpperCase() + k.slice(1)}
                 </label>
-              `).join('')}
-            </div>
+                <div class="absolute bottom-full mb-1 left-1/2 transform -translate-x-1/2 px-2 py-1 text-white bg-gray-800 text-xs rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity">
+                  ${adaptationInfo[k]}
+                </div>
+              </div>
+            `).join('')}
+          </div>
         `;
         actContainer.appendChild(ad);
+      }
     }
-}
 
-function calcular() {
-    let totalPoints = 0;
-    document.querySelectorAll('.activities-container').forEach(c => {
-        c.querySelectorAll('div').forEach(act => {
-            const type = act.querySelector('.content-type').value;
-            const adapt = Array.from(act.querySelectorAll('.adaptation')).filter(x => x.checked).map(x => x.value);
-            let pts = storyPointsContent[type] || 1;
-            adapt.forEach(a => {
-                pts += storyPointsAdaptation[a] || 0;
-            });
-            totalPoints += pts;
-        });
+    function calcular() {
+      let totalPoints = 0;
+      // Learning Paths
+      const numPaths = document.querySelectorAll('#form-container > div').length;
+      totalPoints += numPaths * setupPointsPath;
+      // Módulos
+      document.querySelectorAll('.modules-container').forEach(mc => {
+        const numModules = mc.children.length;
+        totalPoints += numModules * setupPointsModule;
+      });
+      // Actividades
+      document.querySelectorAll('.activity-item').forEach(actDiv => {
+        const type = actDiv.querySelector('.content-type').value;
+        const adapt = Array.from(actDiv.querySelectorAll('.adaptation')).filter(x => x.checked).map(x => x.value);
+        let pts = storyPointsContent[type] || 1;
+        adapt.forEach(a => { pts += storyPointsAdaptation[a] || 0; });
+        totalPoints += pts;
+      });
+      const days = (totalPoints / pointsPerDay).toFixed(1);
+      document.getElementById('resultado').innerHTML =
+        `Total Story Points: <b>${totalPoints}</b><br>` +
+        `Estimación: <b>${days}</b> días hábiles (1 día = ${pointsPerDay} SP)`;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderPaths();
     });
-    const days = (totalPoints / pointsPerDay).toFixed(1);
-    document.getElementById('resultado').innerHTML =
-      `Total Story Points: <b>${totalPoints}</b><br>` +
-      `Estimación: <b>${days}</b> días hábiles (1 día = ${pointsPerDay} points)`;
-}
-
-document.addEventListener('DOMContentLoaded', renderPaths);
-</script>
+  </script>
 </body>
 </html>
