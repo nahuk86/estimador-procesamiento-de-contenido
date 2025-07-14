@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Presentación Estimador de Story Points</title>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js/dist/reveal.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js/dist/theme/white.css">
+  <script src="https://unpkg.com/reveal.js/dist/reveal.js"></script>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <section>
+        <h1>Estimador de Story Points</h1>
+        <h3>Visibilidad y Transparencia en Adaptación de eLearning</h3>
+      </section>
+
+      <section>
+        <h2>Finalidad de la Herramienta</h2>
+        <ul>
+          <li>Dar visibilidad a los <b>stakeholders</b> sobre el tiempo estimado de procesamiento</li>
+          <li>Facilitar la planificación de recursos y calendarios</li>
+          <li>Priorizar solicitudes de carga y adaptación de contenido</li>
+          <li>Mejorar la comunicación entre equipos técnicos y de negocio</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Lógica de Cálculo</h2>
+        <ol>
+          <li>Asignación de puntos a cada elemento:</li>
+          <ul>
+            <li><b>Learning Path:</b> 2 SP</li>
+            <li><b>Módulo:</b> 1 SP</li>
+            <li><b>Contenidos:</b> SCORM/H5P=3, PPT/Video=2, PDF/Texto/Otro=1</li>
+            <li><b>Adaptaciones:</b> Conversión=1, Edición=2, Multilingüe=3, etc.</li>
+          </ul>
+          <li>SP totales = suma de todos los puntos</li>
+          <li>Estimación (días hábiles) = SP totales / Velocidad de procesamiento</li>
+          <li><b>Velocidad estándar:</b> 4 SP por día hábil</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>Datos Relevantes</h2>
+        <ul>
+          <li><b>Setup Path:</b> 2 SP</li>
+          <li><b>Setup Módulo:</b> 1 SP</li>
+          <li><b>Tipos de Contenido y Adaptaciones:</b> Detalle en documentación interna</li>
+          <li><b>Ejemplo:</b> 5 LP + 12 módulos + 30 actividades = 100 SP → 25 días hábiles</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Beneficios Principales</h2>
+        <ul>
+          <li>Transparencia en tiempos y cargas de trabajo</li>
+          <li>Mejora en la priorización de solicitudes</li>
+          <li>Comunicación clara con stakeholders</li>
+          <li>Base objetiva para planificación y reportes</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Implementación y Uso</h2>
+        <ul>
+          <li>Integración en portal interno (intranet o herramienta de gestión)</li>
+          <li>Acceso mediante URL directa o embed en dashboard</li>
+          <li>Generación de reportes en PDF y exportación de datos para análisis</li>
+          <li>Formación rápida: 15 minutos de capacitación para usuarios</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Siguientes Pasos</h2>
+        <ul>
+          <li>Recoger feedback de equipos de contenido y TI</li>
+          <li>Ajustar velocidad de procesamiento según métricas reales</li>
+          <li>Automatizar integraciones con JIRA/ServiceNow</li>
+          <li>Generar dashboard de KPIs: SP procesados vs tiempo real</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Contacto</h2>
+        <p>Digital Delivery Manager</p>
+        <p>Email: tu.email@empresa.com</p>
+      </section>
+
+    </div>
+  </div>
+
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: true
+    });
+  </script>
+</body>
+</html>
