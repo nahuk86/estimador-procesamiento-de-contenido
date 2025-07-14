@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Infografía: Cómo usar el Estimador de Story Points</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- AOS (Animate On Scroll) -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .step-icon { @apply text-4xl text-green-600 mb-4; }
+    .header-bg { background: linear-gradient(135deg, #0A2342 0%, #2CA58D 100%); }
+  </style>
+</head>
+<body class="bg-gray-50">
+  <!-- Header -->
+  <header class="header-bg text-white py-16 text-center" data-aos="fade-down">
+    <h1 class="text-5xl font-bold">Estimador de Story Points</h1>
+    <p class="mt-4 text-xl">Visualiza y planifica tu carga y adaptación de contenido eLearning</p>
+  </header>
+
+  <!-- Sección de pasos -->
+  <section class="max-w-4xl mx-auto py-12 px-4">
+    <h2 class="text-3xl font-semibold text-center mb-8" data-aos="fade-up">Pasos para usar la herramienta</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="bg-white p-6 rounded-lg shadow-lg" data-aos="zoom-in" data-aos-delay="100">
+        <i class="fas fa-plus-circle step-icon mx-auto"></i>
+        <h3 class="text-xl font-bold text-center mb-2">1. Definir Learning Paths</h3>
+        <p class="text-gray-600 text-center">Ingresa el número de Learning Paths que requieres estimar.</p>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-lg" data-aos="zoom-in" data-aos-delay="200">
+        <i class="fas fa-layer-group step-icon mx-auto"></i>
+        <h3 class="text-xl font-bold text-center mb-2">2. Configurar Módulos</h3>
+        <p class="text-gray-600 text-center">Para cada Path, indica cuántos módulos incluye.</p>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-lg" data-aos="zoom-in" data-aos-delay="300">
+        <i class="fas fa-tasks step-icon mx-auto"></i>
+        <h3 class="text-xl font-bold text-center mb-2">3. Añadir Actividades</h3>
+        <p class="text-gray-600 text-center">Selecciona tipo de contenido y adaptaciones para cada actividad.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección lógica de cálculo -->
+  <section class="bg-white py-12" data-aos="fade-up">
+    <div class="max-w-3xl mx-auto text-center">
+      <h2 class="text-3xl font-semibold mb-4">Lógica de Cálculo</h2>
+      <p class="text-gray-700 mb-6">La estimación se basa en:</p>
+      <ul class="space-y-4 text-left">
+        <li><i class="fas fa-check-circle text-green-500 mr-2"></i><b>Learning Path:</b> 2 SP</li>
+        <li><i class="fas fa-check-circle text-green-500 mr-2"></i><b>Módulo:</b> 1 SP</li>
+        <li><i class="fas fa-check-circle text-green-500 mr-2"></i><b>Contenido:</b> SCORM/H5P=3, PPT/Video=2, PDF/Texto/Otro=1</li>
+        <li><i class="fas fa-check-circle text-green-500 mr-2"></i><b>Adaptaciones:</b> Conversión=1, Edición=2, Corrección=1, Navegación=1, Multilingüe=3</li>
+        <li><i class="fas fa-calculator text-green-500 mr-2"></i><b>Velocidad:</b> 4 SP por día hábil</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Sección de animación de resultado -->
+  <section class="py-12 px-4" data-aos="fade-up">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-3xl font-semibold mb-4">Genera tu Estimación</h2>
+      <p class="text-gray-700 mb-6">Haz clic en "Calcular Estimación" y obtén tus días hábiles estimados.</p>
+      <div class="inline-block bg-green-600 text-white px-8 py-4 rounded-full shadow-lg animate-pulse cursor-pointer">
+        <i class="fas fa-calculator mr-2"></i>Calcular Estimación
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer con llamada a la acción -->
+  <footer class="bg-gray-200 py-8 text-center" data-aos="fade-up">
+    <p class="text-gray-700 mb-2">¿Listo para optimizar tu planificación?</p>
+    <a href="/index.html" class="bg-blue-600 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:bg-blue-700 transition">Probar ahora</a>
+  </footer>
+
+  <script>
+    AOS.init({ duration: 800, once: true });
+  </script>
+</body>
+</html>

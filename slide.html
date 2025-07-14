@@ -3,89 +3,128 @@
 <head>
   <meta charset="UTF-8">
   <title>Presentación Estimador de Story Points</title>
+  <!-- Reveal.js core CSS -->
   <link rel="stylesheet" href="https://unpkg.com/reveal.js/dist/reveal.css">
-  <link rel="stylesheet" href="https://unpkg.com/reveal.js/dist/theme/white.css">
+  <!-- Tema personalizado oscuro -->
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js/dist/theme/black.css" id="theme">
+  <!-- Google Fonts y FontAwesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .reveal {
+      font-family: 'Montserrat', sans-serif;
+    }
+    h1, h2, h3 {
+      color: #2CA58D;
+    }
+    .slides section {
+      padding: 2rem;
+    }
+    .fa-check-circle {
+      color: #2CA58D;
+      margin-right: 0.5rem;
+    }
+    .feature-list li {
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+    }
+    .adapt-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .adapt-table th, .adapt-table td {
+      border-bottom: 2px solid #2CA58D;
+      padding: 0.5rem;
+      text-align: left;
+    }
+  </style>
   <script src="https://unpkg.com/reveal.js/dist/reveal.js"></script>
 </head>
 <body>
   <div class="reveal">
     <div class="slides">
-
-      <section>
-        <h1>Estimador de Story Points</h1>
-        <h3>Visibilidad y Transparencia en Adaptación de eLearning</h3>
+      <section data-background-color="#0A2342" data-background-opacity="0.8">
+        <h1 style="color:#F0F2F5;">Estimador de Story Points</h1>
+        <h3 style="color:#F0F2F5;">Visibilidad y Transparencia en Adaptación de eLearning</h3>
       </section>
 
-      <section>
-        <h2>Finalidad de la Herramienta</h2>
-        <ul>
-          <li>Dar visibilidad a los <b>stakeholders</b> sobre el tiempo estimado de procesamiento</li>
-          <li>Facilitar la planificación de recursos y calendarios</li>
-          <li>Priorizar solicitudes de carga y adaptación de contenido</li>
-          <li>Mejorar la comunicación entre equipos técnicos y de negocio</li>
+      <section data-background-color="#F0F2F5">
+        <h2><i class="fas fa-bullseye"></i>Finalidad de la Herramienta</h2>
+        <ul class="feature-list">
+          <li><i class="fas fa-users fa-check-circle"></i>Visibilidad para stakeholders</li>
+          <li><i class="fas fa-calendar-alt fa-check-circle"></i>Planificación de recursos</li>
+          <li><i class="fas fa-tasks fa-check-circle"></i>Priorización de solicitudes</li>
+          <li><i class="fas fa-comments fa-check-circle"></i>Comunicación eficiente</li>
         </ul>
       </section>
 
-      <section>
+      <section data-background="https://via.placeholder.com/1920x1080/2CA58D/FFFFFF?text=Lógica+de+Cálculo" data-background-size="cover">
         <h2>Lógica de Cálculo</h2>
         <ol>
-          <li>Asignación de puntos a cada elemento:</li>
-          <ul>
-            <li><b>Learning Path:</b> 2 SP</li>
-            <li><b>Módulo:</b> 1 SP</li>
-            <li><b>Contenidos:</b> SCORM/H5P=3, PPT/Video=2, PDF/Texto/Otro=1</li>
-            <li><b>Adaptaciones:</b> Conversión=1, Edición=2, Multilingüe=3, etc.</li>
-          </ul>
-          <li>SP totales = suma de todos los puntos</li>
-          <li>Estimación (días hábiles) = SP totales / Velocidad de procesamiento</li>
-          <li><b>Velocidad estándar:</b> 4 SP por día hábil</li>
+          <li>Asignación de Story Points a cada elemento</li>
+          <li>Suma total de SP</li>
+          <li>Estimación = SP totales / 4 SP por día hábil</li>
         </ol>
       </section>
 
-      <section>
+      <section data-background-color="#FFFFFF">
         <h2>Datos Relevantes</h2>
-        <ul>
-          <li><b>Setup Path:</b> 2 SP</li>
-          <li><b>Setup Módulo:</b> 1 SP</li>
-          <li><b>Tipos de Contenido y Adaptaciones:</b> Detalle en documentación interna</li>
-          <li><b>Ejemplo:</b> 5 LP + 12 módulos + 30 actividades = 100 SP → 25 días hábiles</li>
+        <table style="width:100%; text-align:left; border-collapse: collapse;">
+          <tr><th style="border-bottom:2px solid #2CA58D; padding:0.5rem;">Componente</th><th style="border-bottom:2px solid #2CA58D; padding:0.5rem;">Story Points</th></tr>
+          <tr><td style="padding:0.5rem;">Learning Path</td><td style="padding:0.5rem;">2</td></tr>
+          <tr><td style="padding:0.5rem;">Módulo</td><td style="padding:0.5rem;">1</td></tr>
+          <tr><td style="padding:0.5rem;">SCORM/H5P</td><td style="padding:0.5rem;">3</td></tr>
+          <tr><td style="padding:0.5rem;">PPT/Video</td><td style="padding:0.5rem;">2</td></tr>
+        </table>
+      </section>
+
+      <section data-background-color="#F7F7F7">
+        <h2><i class="fas fa-sliders-h"></i>Valores de Actividades de Adaptación</h2>
+        <table class="adapt-table">
+          <tr><th>Adaptación</th><th>Story Points</th></tr>
+          <tr><td>Carga sin modificación</td><td>0</td></tr>
+          <tr><td>Conversión de formato</td><td>1</td></tr>
+          <tr><td>Edición multimedia</td><td>2</td></tr>
+          <tr><td>Ajustes de navegación</td><td>1</td></tr>
+          <tr><td>Corrección de contenido</td><td>1</td></tr>
+          <tr><td>Multilingüe</td><td>3</td></tr>
+        </table>
+      </section>
+
+      <section data-background-color="#2CA58D" data-background-opacity="0.7">
+        <h2 style="color:#F0F2F5;"><i class="fas fa-star"></i>Beneficios Principales</h2>
+        <ul class="feature-list" style="color:#F0F2F5;">
+          <li><i class="fas fa-lightbulb fa-check-circle"></i>Mayor transparencia</li>
+          <li><i class="fas fa-project-diagram fa-check-circle"></i>Mejor priorización</li>
+          <li><i class="fas fa-handshake fa-check-circle"></i>Comunicación clara</li>
+          <li><i class="fas fa-chart-line fa-check-circle"></i>Base objetiva</li>
         </ul>
       </section>
 
-      <section>
-        <h2>Beneficios Principales</h2>
-        <ul>
-          <li>Transparencia en tiempos y cargas de trabajo</li>
-          <li>Mejora en la priorización de solicitudes</li>
-          <li>Comunicación clara con stakeholders</li>
-          <li>Base objetiva para planificación y reportes</li>
+      <section data-background-color="#F7F7F7">
+        <h2><i class="fas fa-cogs"></i>Implementación y Uso</h2>
+        <ul class="feature-list">
+          <li>Integración en intranet o dashboard</li>
+          <li>Embed o URL directa</li>
+          <li>Generación de PDF con detalle</li>
+          <li>Formación rápida (15 min)</li>
         </ul>
       </section>
 
-      <section>
-        <h2>Implementación y Uso</h2>
-        <ul>
-          <li>Integración en portal interno (intranet o herramienta de gestión)</li>
-          <li>Acceso mediante URL directa o embed en dashboard</li>
-          <li>Generación de reportes en PDF y exportación de datos para análisis</li>
-          <li>Formación rápida: 15 minutos de capacitación para usuarios</li>
+      <section data-background-color="#FFFFFF">
+        <h2><i class="fas fa-road"></i>Siguientes Pasos</h2>
+        <ul class="feature-list">
+          <li>Feedback de equipos</li>
+          <li>Ajuste de velocidad real</li>
+          <li>Integración con JIRA/ServiceNow</li>
+          <li>Dashboard de KPIs</li>
         </ul>
       </section>
 
-      <section>
-        <h2>Siguientes Pasos</h2>
-        <ul>
-          <li>Recoger feedback de equipos de contenido y TI</li>
-          <li>Ajustar velocidad de procesamiento según métricas reales</li>
-          <li>Automatizar integraciones con JIRA/ServiceNow</li>
-          <li>Generar dashboard de KPIs: SP procesados vs tiempo real</li>
-        </ul>
-      </section>
-
-      <section>
-        <h2>Contacto</h2>
-        <p>Digital Delivery Manager</p>
-        <p>Email: tu.email@empresa.com</p>
+      <section data-background-color="#0A2342" data-background-opacity="0.8">
+        <h2 style="color:#F0F2F5;"><i class="fas fa-envelope"></i>Contacto</h2>
+        <p style="color:#F0F2F5;">Digital Delivery Manager</p>
+        <p style="color:#F0F2F5;">Email: nahuel.krauss@pfizer.com</p>
       </section>
 
     </div>
@@ -94,8 +133,12 @@
   <script>
     Reveal.initialize({
       hash: true,
-      slideNumber: true
+      slideNumber: true,
+      transition: 'fade',
+      backgroundTransition: 'slide',
+      progress: true
     });
   </script>
 </body>
 </html>
+
