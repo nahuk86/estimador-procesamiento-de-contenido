@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Estimador con Story Points - Adaptación de eLearning</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- jsPDF CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body class="bg-gray-100 p-8">
   <!-- Modal de información inicial -->
@@ -45,9 +47,14 @@
         <input id="numPaths" type="number" min="1" value="1" class="p-2 border rounded w-full" onchange="renderPaths()">
       </div>
       <form id="form-container" class="space-y-6"></form>
-      <button onclick="calcular()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded w-full font-bold">
-        Calcular Estimación
-      </button>
+      <div class="flex space-x-2">
+        <button onclick="calcular()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded flex-1 font-bold">
+          Calcular Estimación
+        </button>
+        <button onclick="downloadPDF()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded flex-1 font-bold">
+          Descargar PDF
+        </button>
+      </div>
       <div id="resultado" class="mt-6 text-lg font-semibold text-blue-800"></div>
     </div>
   </div>
@@ -60,7 +67,6 @@
     const setupPointsModule = 1;
     const pointsPerDay = 4;
 
-    // Descripciones para adaptaciones (tooltips CSS)
     const adaptationInfo = {
       carga: 'Carga sin modificación: subir contenido sin ajustes.',
       conversion: 'Conversión de formato: e.g., PPT a H5P.',
@@ -142,15 +148,15 @@
 
     function calcular() {
       let totalPoints = 0;
-      // Learning Paths
+      
       const numPaths = document.querySelectorAll('#form-container > div').length;
       totalPoints += numPaths * setupPointsPath;
-      // Módulos
+
       document.querySelectorAll('.modules-container').forEach(mc => {
         const numModules = mc.children.length;
         totalPoints += numModules * setupPointsModule;
       });
-      // Actividades
+
       document.querySelectorAll('.activity-item').forEach(actDiv => {
         const type = actDiv.querySelector('.content-type').value;
         const adapt = Array.from(actDiv.querySelectorAll('.adaptation')).filter(x => x.checked).map(x => x.value);
@@ -158,10 +164,41 @@
         adapt.forEach(a => { pts += storyPointsAdaptation[a] || 0; });
         totalPoints += pts;
       });
+
       const days = (totalPoints / pointsPerDay).toFixed(1);
       document.getElementById('resultado').innerHTML =
         `Total Story Points: <b>${totalPoints}</b><br>` +
         `Estimación: <b>${days}</b> días hábiles (1 día = ${pointsPerDay} SP)`;
+    }
+
+    function downloadPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      let y = 10;
+      doc.setFontSize(16);
+      doc.text('Estimación de Story Points', 10, y);
+      y += 10;
+      doc.setFontSize(12);
+
+      document.querySelectorAll('#form-container > div').forEach((pathDiv, i) => {
+        doc.text(`Learning Path ${i+1}`, 10, y); y += 6;
+        pathDiv.querySelectorAll('.modules-container > div').forEach((modDiv, j) => {
+          doc.text(`  Módulo ${j+1}`, 10, y); y += 6;
+          modDiv.querySelectorAll('.activity-item').forEach((actDiv, k) => {
+            const type = actDiv.querySelector('.content-type').value;
+            const adaptList = Array.from(actDiv.querySelectorAll('.adaptation')).filter(x => x.checked).map(x => x.value);
+            const adaptText = adaptList.length ? adaptList.join(', ') : 'ninguna';
+            doc.text(`    Actividad ${k+1}: Tipo=${type}, Adaptaciones=${adaptText}`, 10, y);
+            y += 6;
+            if (y > 280) { doc.addPage(); y = 10; }
+          });
+        });
+        y += 4;
+      });
+
+      const resultadoText = document.getElementById('resultado').innerText;
+      doc.text(resultadoText, 10, y);
+      doc.save('estimacion_storypoints.pdf');
     }
 
     document.addEventListener('DOMContentLoaded', () => {
