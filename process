@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuevo Proceso de Adaptación y Gestión de Contenido - iPfizer LATAM</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom Styles -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Style for the timeline connector */
+        .timeline-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 24px; /* Center with the icon on mobile */
+            top: 56px;
+            bottom: -16px;
+            width: 2px;
+            background-color: #e5e7eb; /* gray-200 */
+            z-index: -1;
+        }
+        @media (min-width: 1024px) { /* Apply horizontal line only on large screens */
+            .timeline-step:not(:last-child)::after {
+                left: 50%;
+                right: -50%;
+                top: 24px; /* Align with the center of the icon */
+                bottom: auto;
+                width: auto;
+                height: 2px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <h1 class="text-3xl font-bold text-blue-800">Nuevo Proceso de Gestión de Contenido</h1>
+            <p class="mt-1 text-lg text-gray-600">Equipo de Adaptación y Gestión de Contenido - iPfizer LATAM</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <!-- Introduction -->
+            <div class="bg-white p-8 rounded-xl shadow-md mb-12">
+                <h2 class="text-2xl font-semibold mb-4 text-blue-700">Bienvenido al nuevo flujo de trabajo</h2>
+                <p class="text-gray-700 leading-relaxed">
+                    Hemos diseñado un nuevo proceso para optimizar la gestión y adaptación de contenido, buscando mayor transparencia, eficiencia y colaboración. Esta guía detalla cada paso del flujo de trabajo, desde la solicitud inicial hasta el seguimiento post-publicación. Nuestro objetivo es clarificar las etapas, definir responsabilidades y mejorar la comunicación entre los solicitantes y nuestro equipo.
+                </p>
+            </div>
+
+            <!-- Process Steps Timeline -->
+            <div class="space-y-12 lg:space-y-0 lg:grid lg:grid-cols-4 lg:gap-x-8">
+
+                <!-- Step 1: Request -->
+                <div class="relative timeline-step">
+                    <div class="flex items-center mb-4">
+                        <div class="flex-shrink-0 h-12 w-12 rounded-full bg-blue-600 text-white flex items-center justify-center text-xl font-bold">1</div>
+                        <h3 class="ml-4 text-xl font-semibold">Inicio de la Solicitud</h3>
+                    </div>
+                    <div class="ml-16 lg:ml-0 bg-white p-6 rounded-lg shadow-md border border-gray-200 h-full">
+                        <p>El proceso comienza cuando un usuario completa el <strong class="text-blue-600">formulario de solicitud</strong> en SharePoint con todos los datos requeridos.</p>
+                        <p class="mt-2 text-sm text-gray-500">Una vez enviado, nuestro equipo recibe una notificación automática para iniciar el análisis.</p>
+                    </div>
+                </div>
+
+                <!-- Step 2: Estimation -->
+                <div class="relative timeline-step">
+                    <div class="flex items-center mb-4">
+                        <div class="flex-shrink-0 h-12 w-12 rounded-full bg-blue-600 text-white flex items-center justify-center text-xl font-bold">2</div>
+                        <h3 class="ml-4 text-xl font-semibold">Análisis y Estimación</h3>
+                    </div>
+                    <div class="ml-16 lg:ml-0 bg-white p-6 rounded-lg shadow-md border border-gray-200 h-full">
+                        <p>Analizamos la solicitud y calculamos el esfuerzo usando nuestra <strong class="text-blue-600">herramienta de estimación</strong>, que asigna puntos a cada tarea.</p>
+                        <p class="mt-2 text-sm text-gray-500">El solicitante recibe la estimación final y una invitación a una <strong class="font-medium">reunión de seguimiento diario (Daily)</strong>.</p>
+                    </div>
+                </div>
+
+                <!-- Step 3: Planning -->
+                <div class="relative timeline-step">
+                    <div class="flex items-center mb-4">
+                        <div class="flex-shrink-0 h-12 w-12 rounded-full bg-blue-600 text-white flex items-center justify-center text-xl font-bold">3</div>
+                        <h3 class="ml-4 text-xl font-semibold">Planificación y UAT</h3>
+                    </div>
+                    <div class="ml-16 lg:ml-0 bg-white p-6 rounded-lg shadow-md border border-gray-200 h-full">
+                        <p>En la primera Daily se presenta el estado del proyecto y se agenda la fecha para la <strong class="text-blue-600">llamada de UAT (Pruebas de Aceptación del Usuario)</strong>.</p>
+                        <p class="mt-2 text-sm text-gray-500">Esto asegura que el solicitante reserve el tiempo necesario para la validación final del contenido.</p>
+                    </div>
+                </div>
+
+                <!-- Step 4: Publication -->
+                <div class="relative"> <!-- No timeline-step class on the last item -->
+                    <div class="flex items-center mb-4">
+                        <div class="flex-shrink-0 h-12 w-12 rounded-full bg-blue-600 text-white flex items-center justify-center text-xl font-bold">4</div>
+                        <h3 class="ml-4 text-xl font-semibold">Publicación</h3>
+                    </div>
+                    <div class="ml-16 lg:ml-0 bg-white p-6 rounded-lg shadow-md border border-gray-200 h-full">
+                        <p>El solicitante debe: <strong class="text-blue-600">aprobar el contenido</strong>, gestionar la aprobación en <strong class="text-blue-600">GCMA/MLR</strong> y compartir el código GCMA.</p>
+                        <p class="mt-2 text-sm text-gray-500">Una vez confirmados estos puntos, el equipo de gestión habilitará el contenido en producción.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Communication & Alerts Section -->
+            <div class="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <!-- Communication Card -->
+                <div class="bg-white p-8 rounded-xl shadow-md">
+                    <div class="flex items-center mb-4">
+                        <svg class="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a2 2 0 01-2-2V10a2 2 0 012-2h8z" />
+                        </svg>
+                        <h3 class="ml-3 text-2xl font-semibold text-blue-700">Comunicación Continua</h3>
+                    </div>
+                    <ul class="space-y-3 text-gray-700 list-disc list-inside">
+                        <li><strong class="font-semibold">Dailies de 15 minutos:</strong> Revisión del progreso diario (ayer, hoy, backlog).</li>
+                        <li><strong class="font-semibold">Reporte Semanal:</strong> Status global de todas las solicitudes en proceso.</li>
+                        <li><strong class="font-semibold">Vista de Solicitudes:</strong> Acceso a un panel para ver el detalle y estado de cada solicitud.</li>
+                    </ul>
+                </div>
+
+                <!-- Alerts Card -->
+                <div class="bg-white p-8 rounded-xl shadow-md">
+                    <div class="flex items-center mb-4">
+                        <svg class="h-8 w-8 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                        </svg>
+                        <h3 class="ml-3 text-2xl font-semibold text-orange-600">Alertas de Vencimiento GCMA</h3>
+                    </div>
+                    <p class="text-gray-700 mb-3">Se han configurado alertas automáticas para notificar sobre el vencimiento de la aprobación de cada pieza:</p>
+                    <ul class="space-y-3 text-gray-700 list-disc list-inside">
+                        <li>Notificaciones con <strong class="font-semibold">1 mes, 15 días y 1 semana</strong> de antelación.</li>
+                        <li>Si el contenido expira sin renovación, <strong class="font-semibold">será despublicado automáticamente</strong> y se notificará al contacto responsable.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Important Links -->
+            <div class="mt-16 bg-blue-50 border border-blue-200 p-8 rounded-xl">
+                 <h2 class="text-2xl font-semibold mb-4 text-blue-700">Herramientas y Enlaces de Interés</h2>
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                     <a href="https://pfizer.sharepoint.com/:l:/s/PSILATAMContentManager/FE79nMm4UvZEhSOW9bO_b7sBcR1ZYbUmQgo-oayTjKs6Xg?nav=OTFlYWU1YWEtNzA3ZC00YjY5LThlYjYtNjQ4MzY0M2FkMmI2" class="block bg-white p-6 rounded-lg shadow-md hover:shadow-lg hover:bg-blue-100 transition-all duration-300">
+                         <h4 class="text-lg font-bold text-blue-800">Formulario de Solicitud</h4>
+                         <p class="text-gray-600 mt-1">Punto de partida para todas las nuevas solicitudes de contenido. (Enlace a SharePoint)</p>
+                     </a>
+                     <a href="https://nahuk86.github.io/estimador-procesamiento-de-contenido/" target="_blank" rel="noopener noreferrer" class="block bg-white p-6 rounded-lg shadow-md hover:shadow-lg hover:bg-blue-100 transition-all duration-300">
+                         <h4 class="text-lg font-bold text-blue-800">Herramienta de Estimación</h4>
+                         <p class="text-gray-600 mt-1">Permite obtener un estimado de alto nivel del esfuerzo requerido. La estimación final será provista por el equipo.</p>
+                     </a>
+                 </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white mt-12">
+        <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 text-center text-gray-500">
+            <p>&copy; 2024 Equipo de Adaptación y Gestión de Contenido | iPfizer LATAM</p>
+        </div>
+    </footer>
+
+</body>
+</html>
